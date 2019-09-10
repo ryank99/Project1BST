@@ -1,16 +1,16 @@
 package Proj1BST;
 
-public class Student {
+public class Student implements Comparable{
     private Name name;
     private int score;
     private String grade;
-    private int id;
+    private String id;
     
-    public Student(Name n) {
+    public Student(Name n, String i) {
         name = n;
         score = -1;
         grade = "E";
-        id = 0;
+        id = i;
     }
     
     
@@ -26,7 +26,7 @@ public class Student {
         return name;
     }
     
-    public void setID(int id) {
+    public void setID(String id) {
         this.id = id;
     }
     
@@ -38,7 +38,15 @@ public class Student {
         return score;
     }
     
-    public int getID() {
+
+    
+    public String getID() {
         return id;
+    }
+
+
+    @Override
+    public int compareTo(Object arg0) {
+        return this.name.compareTo( ((Student)arg0).getName() );
     }
 }
