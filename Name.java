@@ -27,10 +27,10 @@ public class Name implements Comparable{
     public int compareTo(Object n) {
         if (n instanceof Name) {
             if (this.last.compareTo( ((Name)n).getLast() ) == 0) {
-                return -1*this.first.compareTo( ((Name)n).getFirst());
+                return this.first.compareTo( ((Name)n).getFirst());
             }
             else 
-                return -1*this.last.compareTo( ((Name)n).last);
+                return this.last.compareTo( ((Name)n).last);
         }
         return 99;
     }
