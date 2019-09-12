@@ -5,12 +5,14 @@ public class Student implements Comparable{
     private int score;
     private String grade;
     private String id;
+    private int level;
     
     public Student(Name n, String i) {
         name = n;
         score = -1;
         grade = "E";
         id = i;
+        level = 0;
     }
     
     
@@ -48,5 +50,9 @@ public class Student implements Comparable{
     @Override
     public int compareTo(Object arg0) {
         return this.name.compareTo( ((Student)arg0).getName() );
+    }
+    //id, name, score, level
+    public String toString() {
+        return id+ ", "+ name.toString() + ", "+score + ", Level: "+ level;
     }
 }
