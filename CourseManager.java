@@ -4,6 +4,7 @@ public class CourseManager {
 
     private Section[] sections;
     private int currSection = 1;
+    private Student currStudent;
     //finished(probably)
     public CourseManager() {
         sections = new Section[3];
@@ -12,30 +13,63 @@ public class CourseManager {
         }
     }
     //finished(probably)
-    public void section(int n) {
+    public String section(int n) {
         System.out.println("section changed from "+currSection+" to " + n);
         currSection = n;
+        return "switch to section " + currSection;
     }
     
     //finished(probably)
-    public void insert(Name n) {
-        sections[currSection-1].getRoster().insert( new Student(n, generateID()) );
+    public String insert(Name n) {
+        int prev = sections[currSection-1].getRoster().getElements();
+        sections[currSection-1].getRoster().insert(new Student(n, generateID()));
+        int curr = sections[currSection-1].getRoster().getElements();
+        if (prev == curr) {
+            return ""+n+" is already in section "+ currSection;
+                  //  sections[currSection-1].getRoster().find(new Student(n, "")).toString();
+        }
+        else {
+            return ""+n+" inserted";
+        }
     }
     //finished(probably)
     public void remove(Name n) {
         sections[currSection-1].getRoster().remove(new Student(n, ""));
     }
     //finished(probably)
-    public void removeSection(int n) {
+    public String removeSection(int n) {
         sections[n-1] = new Section(n);
+        return "Section "+ n + " removed";
     }
     
-    public void search() {
-        
+    public String search(Name n) {
+        Student x = (Student)sections[currSection-1].getRoster().find(new Student(n, ""));
+        if(x == null) {
+            return "Search failed. Student "+n.toString() + " doesn't exist in section " + currSection;
+        }
+        else {
+            currStudent = x;
+            return("Found "+ x.toString());
+
+        }
+
     }
     
-    public void score() {
-        
+    public String multSearch(String s) {
+        //iterate through and print all matching(first or last name) records
+        return "";
+    }
+    
+    
+    public String score(int s) {
+        if(s > 100 || s < 0) {
+            return "Scores have to be integers in range 0 to 100.";
+        }
+        else {
+            String output = "Update "+ currStudent.getName() +  " record, "+ currStudent.getScore() +" = "+ s;
+            currStudent.setScore(s);
+            return output;
+        }
     }
     //finished(probably)
     public String dumpsection() {
