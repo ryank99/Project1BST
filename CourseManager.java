@@ -1,3 +1,4 @@
+package Project1BST;
 import java.io.*;
 
 public class CourseManager {
