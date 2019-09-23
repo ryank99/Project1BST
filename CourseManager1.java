@@ -40,7 +40,7 @@ public class CourseManager1 {
         }
         String line = null;
         try {
-            line = br.readLine();
+            line = br.readLine().trim();
         }
         catch (IOException e) {
             // TODO Auto-generated catch block
@@ -48,7 +48,7 @@ public class CourseManager1 {
         }
         
         while (line != null) {
-            String[] parts = line.split(" ");
+            String[] parts = line.split("\\s+");
             String func = parts[0];
             switch(func) {
                 case "section": { 
@@ -89,7 +89,7 @@ public class CourseManager1 {
                 }
             }
             try {
-                line = br.readLine();
+                line = br.readLine().trim();
             }
             catch (IOException e) {
                 // TODO Auto-generated catch block
