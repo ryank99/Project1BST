@@ -165,18 +165,30 @@ public class CourseManager1 {
             return "Scores have to be integers in range 0 to 100.";
         }
         else {
-            String output = "Update "+ currStudent.getName() +  " record, "+ currStudent.getScore() +" = "+ s;
+            String output = "Update "+ currStudent.getName() +  " record, Score = "+ s;
             currStudent.setScore(s);
             return output;
         }
     }
     //finished(probably)
     public String dumpsection() {
-       return("Section "+currSection+" dump:\n" + sections[currSection-1].toString());
+       if(sections[currSection-1].getRoster().getElements() == 0) {
+           return("Section" + currSection+" dump:\n"+"Size = 0");
+       }
+       else {
+           return("Section "+currSection+" dump:\n" + sections[currSection-1].toString()
+           + "\nSize = "+ sections[currSection-1].getRoster().getElements());
+       }
         //inorder
     }
     
-    public void grade() {
+    public String grade() {
+        String ret = "Grading Completed:\n";
+        Iterator<Student> me = sections[currSection-1].getRoster().iterator();
+        while(me.hasNext()) {
+            
+        }
+        return ret;
         //iterate through BST and asssign grade with switch statement
     }
     
