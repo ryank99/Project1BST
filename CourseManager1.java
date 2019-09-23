@@ -26,7 +26,7 @@ public class CourseManager1 {
             throw(new Error("Invalid number of program arguments"));
         }
 
-        CourseManager cm = new CourseManager();
+        CourseManager1 cm = new CourseManager1();
         
         String commandFileName = args[0];
         
@@ -108,14 +108,15 @@ public class CourseManager1 {
     //finished(probably)
     public String insert(Name n) {
         int prev = sections[currSection-1].getRoster().getElements();
-        sections[currSection-1].getRoster().insert(new Student(n, generateID()));
+        Student newGuy = new Student(n, generateID());
+        sections[currSection-1].getRoster().insert(newGuy);
         int curr = sections[currSection-1].getRoster().getElements();
         if (prev == curr) {
             return ""+n+" is already in section "+ currSection;
                   //  sections[currSection-1].getRoster().find(new Student(n, "")).toString();
         }
         else {
-            currStudent = (Student)sections[currSection-1].getRoster().find(n);
+            currStudent = newGuy;
             return ""+n+" inserted";
         }
     }
