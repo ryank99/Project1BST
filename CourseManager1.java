@@ -107,7 +107,13 @@ public class CourseManager1 {
                 }
             }
             try {
-                line = br.readLine().trim();
+                String s = br.readLine();
+                if(s != null) {
+                    line = s.trim();
+                }
+                else {
+                    line = null;
+                }
             }
             catch (IOException e) {
                 // TODO Auto-generated catch block
