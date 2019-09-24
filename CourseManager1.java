@@ -1,5 +1,6 @@
 package Proj1BST;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.*;
 
@@ -56,12 +57,19 @@ public class CourseManager1 {
                     break;
                 }
                 case "insert": { 
-                    System.out.println(cm.insert(new Name(parts[1], parts[2])));
+                    System.out.println(cm.insert(new Name(parts[1].toLowerCase(), parts[2].toLowerCase())));
                     break;
                 }
-                case "search": {  
-                    System.out.println(cm.search(new Name(parts[1], parts[2])));
+                case "search": {
+                    if(parts.length == 2) {
+                        System.out.println(cm.multSearch(parts[1].toLowerCase()));
+                        break;
+                    }
+                    else {
+                    System.out.println(cm.search(
+                        new Name(parts[1].toLowerCase(), parts[2].toLowerCase())));
                     break;
+                    }
                 } 
                 case "score": { 
                     System.out.println(cm.score(Integer.parseInt(parts[1])));
@@ -72,7 +80,12 @@ public class CourseManager1 {
                     break;
                 }
                 case "removesection": { 
-                    System.out.println(cm.removeSection(Integer.parseInt(parts[1]))); 
+                    if(parts.length == 1) {
+                        System.out.println(cm.removeSection(cm.currSection)); 
+                    }
+                    else {
+                        System.out.println(cm.removeSection(Integer.parseInt(parts[1]))); 
+                    }
                     break;
                 }
                 case "dumpsection": { 
@@ -80,11 +93,16 @@ public class CourseManager1 {
                     break;
                 }
                 case "grade": { 
-                    cm.grade(); 
+                    System.out.println(cm.grade()); 
                     break;
                 }
                 case "findpair": { 
-                    System.out.println(cm.findPair(Integer.parseInt(parts[1]))); 
+                    if(parts.length == 1) {
+                        System.out.println(cm.findPair(0)); 
+                    }
+                    else {
+                        System.out.println(cm.findPair(Integer.parseInt(parts[1]))); 
+                    }
                     break;
                 }
             }
@@ -107,18 +125,16 @@ public class CourseManager1 {
     
     //finished(probably)
     public String insert(Name n) {
-        int prev = sections[currSection-1].getRoster().getElements();
-        Student newGuy = new Student(n, generateID());
-        sections[currSection-1].getRoster().insert(newGuy);
-        int curr = sections[currSection-1].getRoster().getElements();
-        if (prev == curr) {
-            return ""+n+" is already in section "+ currSection;
-                  //  sections[currSection-1].getRoster().find(new Student(n, "")).toString();
-        }
-        else {
+        if(search(n).contains("failed")){
+            Student newGuy = new Student(n, generateID());
+            sections[currSection-1].getRoster().insert(newGuy);
             currStudent = newGuy;
             return ""+n+" inserted";
         }
+        else {
+            return ""+n+" is already in section "+ currSection;
+        }
+    
     }
     //finished(probably)
     public void remove(Name n) {
@@ -145,18 +161,31 @@ public class CourseManager1 {
     
     public String multSearch(String s) {
         s = s.toLowerCase();
-        String ret = "Search results for name\n";
+        String ret = "Search results for "+ s+ ":\n";
+        boolean found = false;
+        int foundcount = 0;
         Iterator<Student> me = sections[currSection-1].getRoster().iterator();
         while(me.hasNext()) {
             Student curr = me.next();
             if(curr.getName().getLast().equals(s)) {
-                ret += curr.toString();
+                found = true;
+                foundcount++;
+                ret += curr.toString()+"\n";
             }
             else if(curr.getName().getFirst().equals(s)) {
-                ret += curr.toString();
+                found = true;
+                foundcount++;
+                ret += curr.toString()+"\n";
             }
         }
+        if(found) {
+            ret += s+ " was found in " + foundcount + " records in section" + currSection;
         return ret;
+        }
+        else {
+            ret+= s + "was found in 0 records in section" + currSection;
+            return ret;
+        }
     }
     
     
@@ -186,7 +215,17 @@ public class CourseManager1 {
         String ret = "Grading Completed:\n";
         Iterator<Student> me = sections[currSection-1].getRoster().iterator();
         while(me.hasNext()) {
-            
+            Student curr = me.next();
+            int currScore = curr.getScore();
+            String g = "E";
+            if(currScore > 93) {
+                g = "A+";
+            }
+            else if(currScore > 89) {
+                g = "A-";
+            }
+                
+            currStudent.setGrade(g);
         }
         return ret;
         //iterate through BST and asssign grade with switch statement
@@ -194,22 +233,24 @@ public class CourseManager1 {
     
     public String findPair(int x) {
         Iterator<Student> me = sections[currSection-1].getRoster().iterator();
-        Student[] students = new Student[sections[currSection-1].getNum()];
+        ArrayList<Student> students = new ArrayList<Student>();
         int index = 0;
+        int paircount = 0;
         while(me.hasNext()) {//put bst into array
-            students[index] = me.next();
+            Student f = me.next();
+            students.add(f);
             index++;
         }
-        String ret = "Students with a score difference of less than or equal to" + x + "\n";
-        for(int i = 0; i < students.length; i++){
-           for(int j = i+1; j < students.length; j++) {
-               if (students[i].getScore() - students[j].getScore() <= x) {
-                   ret+= students[i].getName().toString() + "\n";
-                   
+        String ret = "Students with a score difference of less than or equal to " + x + ":\n";
+        for(int i = 0; i < students.size(); i++){
+           for(int j = i+1; j < students.size(); j++) {
+               if (Math.abs(students.get(i).getScore() - students.get(j).getScore()) <= x) {
+                   paircount++;
+                   ret+= students.get(i).getName().toString() + ", "+ students.get(j).getName().toString()+"\n";
                }
            }
         }
-        return ret;
+        return ret + "found " + paircount + " pairs";
     }
 
     //helper function to generate ids

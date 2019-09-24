@@ -1,11 +1,13 @@
 package Proj1BST;
 
-
+import java.util.Iterator;
+import java.util.Stack;
 
 public class BST<T extends Comparable<? super T>>
-implements BinarySearchTree<T> {
+implements BinarySearchTree<T>, Iterable<T> {
 
     private int elements;
+    private int actualElements;
     private BinaryNode<T> root;
 
     // ~ Constructor ...........................................................
@@ -18,6 +20,7 @@ implements BinarySearchTree<T> {
     public BST() {
         root = null;
         elements = 0;
+        actualElements = 0;
     }
 
     // ~ Public methods ........................................................
@@ -141,6 +144,7 @@ implements BinarySearchTree<T> {
     private BinaryNode<T> insert(T x, BinaryNode<T> node) {
         if (node == null) {
             elements++;
+            actualElements++;
             return new BinaryNode<T>(x);
         }
         else if (x.compareTo(node.getElement()) < 0) {
@@ -203,6 +207,7 @@ implements BinarySearchTree<T> {
                 result = node.getRight();
             }
         }
+        actualElements--;
         return result;
     }
 
@@ -280,6 +285,10 @@ implements BinarySearchTree<T> {
     public int getElements() {
         return elements;
     }
+    
+    public int getActualElements() {
+        return actualElements;
+    }
     /**
      * Gets an in-order string representation of the tree
      * If the tree holds 5
@@ -297,7 +306,53 @@ implements BinarySearchTree<T> {
             return "()";
         }
         else {
-            return "(" + root.toString() + ")";
+            return "\t" + root.toString();
         }
     }
+    
+    
+    private class myIterator implements Iterator<T>{
+
+        private Stack<BinaryNode<T>> myStack;
+        
+        myIterator(BinaryNode<T> input){
+            myStack = new Stack<BinaryNode<T>>();
+            BinaryNode<T> x = input;
+            while(x != null) {
+                myStack.push(x);
+                x = x.getLeft();
+            }
+        }
+        
+        @Override
+        public boolean hasNext() {
+            
+            return !myStack.isEmpty();
+        }
+
+        @Override
+        public T next() {
+            BinaryNode<T> curr = myStack.pop();
+            T data = curr.getElement();
+            if(curr.getRight() != null) {
+                curr = curr.getRight();
+                while(curr != null) {
+                    myStack.push(curr);
+                    curr = curr.getLeft();
+                }
+            }
+            
+            return data;
+        }
+        
+    }
+
+
+    @Override
+    public Iterator<T> iterator() {
+        // TODO Auto-generated method stub
+        return new myIterator(root);
+    }
+    
+    
     }
