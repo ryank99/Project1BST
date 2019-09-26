@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.*;
@@ -62,29 +60,35 @@ public class Coursemanager1 {
             switch(func) {
                 case "section": { 
                     System.out.println(cm.section(Integer.parseInt(parts[1])));  
+                    prevCommand = func;
                     break;
                 }
                 case "insert": { 
                     System.out.println(cm.insert(new Name(parts[1].toLowerCase(), parts[2].toLowerCase())));
+                    prevCommand = func;
                     break;
                 }
                 case "search": {
                     if(parts.length == 2) {
                         System.out.println(cm.multSearch(parts[1].toLowerCase()));
+                        prevCommand = func;
                         break;
                     }
                     else {
                     System.out.println(cm.search(
                         new Name(parts[1].toLowerCase(), parts[2].toLowerCase())));
+                    prevCommand = func;
                     break;
                     }
                 } 
                 case "score": { 
                     System.out.println(cm.score(Integer.parseInt(parts[1])));
+                    prevCommand = func;
                     break;
                 }
                 case "remove": { 
                     System.out.println(cm.remove(new Name(parts[1], parts[2]))); 
+                    prevCommand = func;
                     break;
                 }
                 case "removesection": { 
@@ -94,14 +98,17 @@ public class Coursemanager1 {
                     else {
                         System.out.println(cm.removeSection(Integer.parseInt(parts[1]))); 
                     }
+                    prevCommand = func;
                     break;
                 }
                 case "dumpsection": { 
-                    System.out.println(cm.dumpsection()); 
+                    System.out.println(cm.dumpsection());
+                    prevCommand = func;
                     break;
                 }
                 case "grade": { 
                     System.out.println(cm.grade()); 
+                    prevCommand = func;
                     break;
                 }
                 case "findpair": { 
@@ -111,6 +118,7 @@ public class Coursemanager1 {
                     else {
                         System.out.println(cm.findPair(Integer.parseInt(parts[1]))); 
                     }
+                    prevCommand = func;
                     break;
                 }
             }
@@ -127,7 +135,6 @@ public class Coursemanager1 {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            prevCommand = func;
         }
     }
     //finished(probably)
