@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.*;
 
+/**
+ * @author Ryan Kirkpatrick
+ *
+ */
+/**
+ * @author Ryan Kirkpatrick
+ *
+ */
 public class Coursemanager1 {
 
     private static Boolean prevCommandSuccess = false;
@@ -144,6 +152,10 @@ public class Coursemanager1 {
     
     }
     //finished(probably)
+    /**
+     * @param n
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public String remove(Name n) {
         if(search(n).contains("failed")){
@@ -152,7 +164,7 @@ public class Coursemanager1 {
         }
         else {
             sections[currSection-1].getRoster().remove(new Student(n, ""));
-            return "Student " + n.toString() + " get removed from section n";
+            return "Student " + n.toString() + " get removed from section " + currSection;
         }
     }
     //finished(probably)
@@ -218,13 +230,21 @@ public class Coursemanager1 {
     }
     //finished(probably)
     public String dumpsection() {
-       if(sections[currSection-1].getRoster().getElements() == 0) {
-           return("Section " + currSection+" dump:\n"+"Size = 0");
+       
+       String ret = "";
+       int count = 0;
+       @SuppressWarnings("unchecked")
+       Iterator<Student> me = sections[currSection-1].getRoster().iterator();
+       while (me.hasNext()) {
+           count++;
+           me.next();
        }
-       else {
-           return("Section "+currSection+" dump:\n" + sections[currSection-1].toString()
-           + "\nSize = "+ sections[currSection-1].getRoster().getElements());
+       ret += "Section " + currSection+ " dump:";
+       if (count > 0) {
+           ret += "\n";
        }
+       return(ret + sections[currSection-1].toString() + "\nSize = "+ count);
+       
         //inorder
     }
     
@@ -260,7 +280,7 @@ public class Coursemanager1 {
             students.add(f);
             index++;
         }
-        String ret = "Students with a score difference of less than or equal to " + x + ":\n";
+        String ret = "Students with score difference less than or equal " + x + ":\n";
         for(int i = 0; i < students.size(); i++){
            for(int j = i+1; j < students.size(); j++) {
                if (Math.abs(students.get(i).getScore() - students.get(j).getScore()) <= x) {

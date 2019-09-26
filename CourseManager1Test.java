@@ -18,17 +18,23 @@ public class CourseManager1Test extends student.TestCase{
     }
     
     public void testSection() {
-      //  String s = test.section(2);
-     //   assertTrue(("section changed from 1 to 2").equals(s) );
+        test = new Coursemanager1();
+        String s = test.section(2);
+        assertTrue(("switch to section 2").equals(s) );
     }
     public void testInsert() {
-       // String s = test.insert(new Name("Ryan", "Kirkpatrick"));
-     //   System.out.println(s);
-      //  assertTrue(s.equals("ryan kirkpatrick inserted"));
+        test = new Coursemanager1();
+        String s = test.insert(new Name("Ryan", "Kirkpatrick"));
+        assertTrue(s.equals("ryan kirkpatrick inserted"));
     }
     
     public void testRemove() {
-        assertTrue(true);
+        test = new Coursemanager1();
+        test.section(1);
+        String s = test.insert(new Name("Ryan", "Kirkpatrick"));
+        String t = test.remove(new Name("Ryan", "Kirkpatrick"));
+        System.out.println(t);
+        assertTrue(t.equals("Student ryan kirkpatrick get removed from section 1"));
     }
 }
 

@@ -2,9 +2,14 @@
 
 import java.util.Iterator;
 import java.util.Stack;
-
+/**
+ * 
+ * @author Ryan Kirkpatrick
+ *
+ * @param <T>
+ */
 public class BST<T extends Comparable<? super T>>
-implements BinarySearchTree<T>, Iterable<T> {
+    implements BinarySearchTree<T>, Iterable<T> {
 
     private int elements;
     private int actualElements;
@@ -32,8 +37,6 @@ implements BinarySearchTree<T>, Iterable<T> {
      *
      * @param x
      *            the item to insert.
-     * @throws DuplicateItemException
-     *             if x is already present.
      */
     public void insert(T x) {
 
@@ -48,8 +51,6 @@ implements BinarySearchTree<T>, Iterable<T> {
      *
      * @param x
      *            the item to remove.
-     * @throws ItemNotFoundException
-     *             if x is not found.
      */
     public void remove(T x) {
         if (x.equals(root)) {
@@ -138,8 +139,6 @@ implements BinarySearchTree<T>, Iterable<T> {
      * @param node
      *            the node that roots the subtree.
      * @return the new root of the subtree.
-     * @throws DuplicateItemException
-     *             if x is already present.
      */
     private BinaryNode<T> insert(T x, BinaryNode<T> node) {
         if (node == null) {
@@ -150,7 +149,7 @@ implements BinarySearchTree<T>, Iterable<T> {
         else if (x.compareTo(node.getElement()) < 0) {
             node.setLeft(insert(x, node.getLeft()));
         }
-        else if(x.compareTo(node.getElement()) > 0){
+        else if (x.compareTo(node.getElement()) > 0) {
             node.setRight(insert(x, node.getRight()));
         }
         else {
@@ -169,8 +168,6 @@ implements BinarySearchTree<T>, Iterable<T> {
      * @param node
      *            the node that roots the subtree.
      * @return the new root of the subtree.
-     * @throws ItemNotFoundException
-     *             if x is not found.
      */
     private BinaryNode<T> remove(T x, BinaryNode<T> node) {
         // This local variable will contain the new root of the subtree,
@@ -281,11 +278,18 @@ implements BinarySearchTree<T>, Iterable<T> {
         }
     }
     
-    //used to generate student id
+    /**
+     * 
+     * @return sdf
+     */
     public int getElements() {
         return elements;
     }
     
+    /**
+     * 
+     * @return asdf
+     */
     public int getActualElements() {
         return actualElements;
     }
@@ -303,22 +307,26 @@ implements BinarySearchTree<T>, Iterable<T> {
     @Override
     public String toString() {
         if (root == null) {
-            return "()";
+            return "";
         }
         else {
             return root.toString();
         }
     }
     
-    
+    /**
+     * 
+     * @author Ryan Kirkpatrick
+     *
+     */
     private class myIterator implements Iterator<T>{
 
         private Stack<BinaryNode<T>> myStack;
         
-        myIterator(BinaryNode<T> input){
+        myIterator(BinaryNode<T> input) {
             myStack = new Stack<BinaryNode<T>>();
             BinaryNode<T> x = input;
-            while(x != null) {
+            while (x != null) {
                 myStack.push(x);
                 x = x.getLeft();
             }
@@ -334,9 +342,9 @@ implements BinarySearchTree<T>, Iterable<T> {
         public T next() {
             BinaryNode<T> curr = myStack.pop();
             T data = curr.getElement();
-            if(curr.getRight() != null) {
+            if (curr.getRight() != null) {
                 curr = curr.getRight();
-                while(curr != null) {
+                while (curr != null) {
                     myStack.push(curr);
                     curr = curr.getLeft();
                 }
@@ -350,9 +358,8 @@ implements BinarySearchTree<T>, Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        // TODO Auto-generated method stub
         return new myIterator(root);
     }
     
     
-    }
+}
