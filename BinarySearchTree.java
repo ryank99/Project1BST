@@ -1,4 +1,3 @@
-package Proj1BST;
 
 /**
  *  This provides method definitions for the base functions of a

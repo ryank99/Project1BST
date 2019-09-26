@@ -1,4 +1,3 @@
-package Proj1BST;
 
 public class Name implements Comparable{
     private String first;

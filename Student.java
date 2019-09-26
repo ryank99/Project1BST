@@ -1,4 +1,3 @@
-package Proj1BST;
 
 public class Student implements Comparable{
     private Name name;
@@ -9,13 +8,15 @@ public class Student implements Comparable{
     
     public Student(Name n, String i) {
         name = n;
-        score = -1;
+        score = 0;
         grade = "E";
         id = i;
         level = 0;
     }
     
-    
+    public Student getThis() {
+        return this;
+    }
     public void setScore(int s) {
         score = s;
     }
@@ -53,6 +54,6 @@ public class Student implements Comparable{
     }
     //id, name, score, level
     public String toString() {
-        return id+ ", "+ name.toString() + ", "+score + ", Level: "+ level;
+        return id+ ", "+ name.toString() + ", "+"score = "+score + ", Level: "+ level;
     }
 }

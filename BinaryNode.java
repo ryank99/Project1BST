@@ -1,4 +1,4 @@
-package Proj1BST;
+
 //-------------------------------------------------------------------------
 /**
  * A basic node stored in an unbalanced binary search tree.
@@ -108,12 +108,12 @@ class BinaryNode<T>
         StringBuilder builder = new StringBuilder();
         if (left != null)
         {
-            builder.append(left.toString() + ", ");
+            builder.append(left.toString() + "\n\t");
         }
         builder.append(element.toString());
         if (right != null)
         {
-            builder.append(", " + right.toString());
+            builder.append("\n\t" + right.toString());
         }
         return builder.toString();
     }
