@@ -177,9 +177,11 @@ public class Coursemanager1 {
         @SuppressWarnings("unchecked")
         Student x = (Student)sections[currSection-1].getRoster().find(new Student(n, ""));
         if(x == null) {
+            prevCommandSuccess = false;
             return "Search failed. Student "+n.toString() + " doesn't exist in section " + currSection;
         }
         else {
+            prevCommandSuccess = true;
             currStudent = x;
             return("Found "+ x.toString());
 
@@ -208,10 +210,12 @@ public class Coursemanager1 {
             }
         }
         if(found) {
+            prevCommandSuccess = false;
             ret += s+ " was found in " + foundcount + " records in section " + currSection;
         return ret;
         }
         else {
+            prevCommandSuccess = false;
             ret+= s + " was found in 0 records in section " + currSection;
             return ret;
         }
@@ -223,9 +227,12 @@ public class Coursemanager1 {
             return "Scores have to be integers in range 0 to 100.";
         }
         else {
-            String output = "Update "+ currStudent.getName() +  " record, Score = "+ s;
-            currStudent.setScore(s);
-            return output;
+            if(prevCommand.equals("insert") || (prevCommand.equals("search") && prevCommandSuccess)) {
+                String output = "Update "+ currStudent.getName() +  " record, Score = "+ s;
+                currStudent.setScore(s);
+                return output;
+            }
+            return "score command can only be called after an insert command or a successful search command with one exact output.";
         }
     }
     //finished(probably)
