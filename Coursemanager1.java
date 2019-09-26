@@ -201,23 +201,30 @@ public class Coursemanager1 {
         String ret = "Search results for "+ s+ ":\n";
         boolean found = false;
         int foundcount = 0;
+        Student match = null;
         @SuppressWarnings("unchecked")
         Iterator<Student> me = sections[currSection-1].getRoster().iterator();
         while(me.hasNext()) {
             Student curr = me.next();
             if(curr.getName().getLast().equals(s)) {
                 found = true;
+                match = curr;
                 foundcount++;
                 ret += curr.toString()+"\n";
             }
             else if(curr.getName().getFirst().equals(s)) {
                 found = true;
+                match = curr;
                 foundcount++;
                 ret += curr.toString()+"\n";
             }
         }
         if(found) {
             prevCommandSuccess = false;
+            if(foundcount == 1) {
+                currStudent = match;
+                prevCommandSuccess = true;
+            }
             ret += s+ " was found in " + foundcount + " records in section " + currSection;
         return ret;
         }
