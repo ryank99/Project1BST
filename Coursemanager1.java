@@ -250,20 +250,69 @@ public class Coursemanager1 {
     
     @SuppressWarnings("unchecked")
     public String grade() {
-        String ret = "Grading Completed:\n";
+        String ret = "Grading Completed:";
+        String[] grades = {"A", "A-", "B+", "B", "B-", "C+",
+            "C", "C-", "D+", "D", "D-", "F"};
+        int[] gradeCount = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         Iterator<Student> me = sections[currSection-1].getRoster().iterator();
         while(me.hasNext()) {
             Student curr = me.next();
             int currScore = curr.getScore();
             String g = "E";
-            if(currScore > 93) {
-                g = "A+";
+            if(currScore >= 90) {
+                gradeCount[0]++;
+                g = "A";
             }
-            else if(currScore > 89) {
+            else if(currScore >= 85 && currScore < 90) {
+                gradeCount[1]++;
                 g = "A-";
             }
-                
+            else if(currScore >= 80 && currScore < 85) {
+                gradeCount[2]++;
+                g = "B+";
+            }
+            else if(currScore >= 75 && currScore < 80) {
+                gradeCount[3]++;
+                g = "B";   
+            }
+            else if(currScore >= 70 && currScore < 75) {
+                gradeCount[4]++;
+                g = "B-";
+            }
+            else if(currScore >= 65 && currScore < 70) {
+                gradeCount[5]++;
+                g = "C+";
+            }
+            else if(currScore >= 60 && currScore < 65) {
+                gradeCount[6]++;
+                g = "C";
+            }
+            else if(currScore > 57 && currScore < 60) {
+                gradeCount[7]++;
+                g = "C-";
+            }
+            else if(currScore >= 55 && currScore <= 57) {
+                gradeCount[8]++;
+                g = "D+";
+            }
+            else if(currScore >= 53 && currScore < 55) {
+                gradeCount[9]++;
+                g = "D";
+            }
+            else if(currScore >= 50 && currScore < 53) {
+                gradeCount[10]++;
+                g = "D-";
+            }
+            else {
+                gradeCount[11]++;
+                g = "F";
+            }
             currStudent.setGrade(g);
+        }
+        for(int i = 0; i < grades.length; i++) {
+            if(gradeCount[i] > 0) {
+                ret += "\n" +gradeCount[i] +" students with grade "+ grades[i];
+            }
         }
         return ret;
         //iterate through BST and asssign grade with switch statement
