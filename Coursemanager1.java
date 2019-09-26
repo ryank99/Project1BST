@@ -18,7 +18,9 @@ public class Coursemanager1 {
     private int currSection = 1;
     private Student currStudent;
     
-    //finished(probably)
+    /**
+     * Creates a Coursemanager1 object
+     */
     public Coursemanager1() {
         sections = new Section[3];
         for(int i = 0; i < sections.length; i++) {
@@ -26,7 +28,10 @@ public class Coursemanager1 {
         }
     }
     
-    
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args) 
     {
         if (args.length != 1) {
@@ -50,7 +55,6 @@ public class Coursemanager1 {
             line = br.readLine().trim();
         }
         catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
@@ -132,18 +136,25 @@ public class Coursemanager1 {
                 }
             }
             catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
-    //finished(probably)
+    /**
+     * Changes section to n
+     * @param n identifier of section
+     * @return string output
+     */
     public String section(int n) {
         currSection = n;
         return "switch to section " + currSection;
     }
     
-    //finished(probably)
+    /**
+     * Inserts new student into current section
+     * @param n Name of student to insert
+     * @return string output
+     */
     @SuppressWarnings("unchecked")
     public String insert(Name n) {
         if(search(n).contains("failed")){
@@ -158,10 +169,10 @@ public class Coursemanager1 {
         }
     
     }
-    //finished(probably)
     /**
-     * @param n
-     * @return
+     * Removes student from current section
+     * @param n Name of student to remove
+     * @return string output
      */
     @SuppressWarnings("unchecked")
     public String remove(Name n) {
@@ -174,12 +185,20 @@ public class Coursemanager1 {
             return "Student " + n.toString() + " get removed from section " + currSection;
         }
     }
-    //finished(probably)
+    /**
+     * Removes section n from sections
+     * @param n Identifier of section
+     * @return string output
+     */
     public String removeSection(int n) {
         sections[n-1] = new Section(n);
         return "Section "+ n + " removed";
     }
-    
+    /**
+     * Searches for student with name n in current section
+     * @param n Name of student
+     * @return string output
+     */
     public String search(Name n) {
         @SuppressWarnings("unchecked")
         Student x = (Student)sections[currSection-1].getRoster().find(new Student(n, ""));
@@ -195,7 +214,11 @@ public class Coursemanager1 {
         }
 
     }
-    
+    /**
+     * Searches for students that have first or last name s
+     * @param s string to query students
+     * @return string output
+     */
     public String multSearch(String s) {
         s = s.toLowerCase();
         String ret = "Search results for "+ s+ ":\n";
@@ -233,9 +256,12 @@ public class Coursemanager1 {
             ret+= s + " was found in 0 records in section " + currSection;
             return ret;
         }
-    }
-    
-    
+    }  
+    /**
+     * Assigns score to current student if previous command was an insert or successful search
+     * @param s score integer
+     * @return string output
+     */
     public String score(int s) {
         if(s > 100 || s < 0) {
             return "Scores have to be integers in range 0 to 100.";
@@ -249,7 +275,10 @@ public class Coursemanager1 {
             return "score command can only be called after an insert command or a successful search command with one exact output.";
         }
     }
-    //finished(probably)
+    /**
+     * Lists information about current section
+     * @return string output
+     */
     public String dumpsection() {
        
        String ret = "";
@@ -265,10 +294,12 @@ public class Coursemanager1 {
            ret += "\n";
        }
        return(ret + sections[currSection-1].toString() + "\nSize = "+ count);
-       
-        //inorder
+       //inorder traversal
     }
-    
+    /**
+     * Assigns grades to all students in current section
+     * @return string output
+     */
     @SuppressWarnings("unchecked")
     public String grade() {
         String ret = "Grading Completed:";
@@ -338,7 +369,11 @@ public class Coursemanager1 {
         return ret;
         //iterate through BST and asssign grade with switch statement
     }
-    
+    /**
+     * Finds pairs of students with differences in scores less than or equal to x
+     * @param x difference in scores
+     * @return string output
+     */
     public String findPair(int x) {
         @SuppressWarnings("unchecked")
         Iterator<Student> me = sections[currSection-1].getRoster().iterator();
@@ -362,7 +397,10 @@ public class Coursemanager1 {
         return ret + "found " + paircount + " pairs";
     }
 
-    //helper function to generate ids
+    /**
+     * Generates a unique ID for the current section
+     * @return id
+     */
     public String generateID() {
         String id = "";
         if (sections.length < 10) {
