@@ -1,4 +1,5 @@
 
+
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -305,7 +306,7 @@ implements BinarySearchTree<T>, Iterable<T> {
             return "()";
         }
         else {
-            return "\t" + root.toString();
+            return root.toString();
         }
     }
     

@@ -1,3 +1,5 @@
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.*;
@@ -51,7 +53,7 @@ public class Coursemanager1 {
             String func = parts[0];
             switch(func) {
                 case "section": { 
-                    cm.section(Integer.parseInt(parts[1]));  
+                    System.out.println(cm.section(Integer.parseInt(parts[1])));  
                     break;
                 }
                 case "insert": { 
@@ -74,7 +76,7 @@ public class Coursemanager1 {
                     break;
                 }
                 case "remove": { 
-                    cm.remove(new Name(parts[1], parts[2])); 
+                    System.out.println(cm.remove(new Name(parts[1], parts[2]))); 
                     break;
                 }
                 case "removesection": { 
@@ -122,7 +124,6 @@ public class Coursemanager1 {
     }
     //finished(probably)
     public String section(int n) {
-        System.out.println("section changed from "+currSection+" to " + n);
         currSection = n;
         return "switch to section " + currSection;
     }
@@ -137,15 +138,22 @@ public class Coursemanager1 {
             return ""+n+" inserted";
         }
         else {
-            Student x = (Student)sections[currSection-1].getRoster().find(new Student(n, ""));
-            return ""+n+" is already in section "+ currSection + "\n" + x.toString();
+            String info = search(n);
+            return ""+n+" is already in section "+ currSection + "\n" + info.substring(6, info.length());
         }
     
     }
     //finished(probably)
     @SuppressWarnings("unchecked")
-    public void remove(Name n) {
-        sections[currSection-1].getRoster().remove(new Student(n, ""));
+    public String remove(Name n) {
+        if(search(n).contains("failed")){
+            return "Remove failed. Student " + n.toString() + 
+                " doesn't exist in section " + currSection;
+        }
+        else {
+            sections[currSection-1].getRoster().remove(new Student(n, ""));
+            return "Student " + n.toString() + " get removed from section n";
+        }
     }
     //finished(probably)
     public String removeSection(int n) {
@@ -188,11 +196,11 @@ public class Coursemanager1 {
             }
         }
         if(found) {
-            ret += s+ " was found in " + foundcount + " records in section" + currSection;
+            ret += s+ " was found in " + foundcount + " records in section " + currSection;
         return ret;
         }
         else {
-            ret+= s + "was found in 0 records in section" + currSection;
+            ret+= s + " was found in 0 records in section " + currSection;
             return ret;
         }
     }
@@ -284,4 +292,3 @@ public class Coursemanager1 {
         return id;
     }
 }
-

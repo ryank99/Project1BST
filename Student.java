@@ -1,4 +1,5 @@
 
+
 public class Student implements Comparable{
     private Name name;
     private int score;
@@ -54,6 +55,6 @@ public class Student implements Comparable{
     }
     //id, name, score, level
     public String toString() {
-        return id+ ", "+ name.toString() + ", "+"score = "+score + ", Level: "+ level;
+        return id+ ", "+ name.toString() + ", "+"score = "+score;
     }
 }
